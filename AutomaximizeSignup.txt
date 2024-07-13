@@ -1,0 +1,119 @@
+package TestEnvironment;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import org.testng.Reporter;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Automaxsignup{
+
+	private static ChromeDriver driver;
+
+	@BeforeClass
+	public void setUp() {
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		driver = new ChromeDriver(options);
+		driver.manage().window().maximize();
+	}
+
+	@Test
+	public void AutomaxSignup() throws InterruptedException {
+		driver.get("https://demoshop.test.redeal.io/qa/?redeal-debug");
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("button-prefill")).click();
+		Reporter.log("Clicked on Prefill button");
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("input_tag")).sendKeys("automaxisignup");
+		Reporter.log("Entered Tag Name");
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("button-instant")).click();
+		Reporter.log("Auto Maximize after 5 seconds");
+
+		Thread.sleep(6000);
+		WebElement frame1 = driver.findElement(By.id("redeal-modal-iframe"));
+		driver.switchTo().frame(frame1);
+
+		Thread.sleep(3000);
+		driver.findElement(By.id("btn-redeal-customer-info")).click();
+
+		Thread.sleep(3000);
+		WebElement emailInput = driver.findElement(By.id("redeal-info-customer-email"));
+		emailInput.sendKeys("kishansinh@alvisoftware.com");
+		Reporter.log("Entered email: kishansinh@alvisoftware.com");
+
+		Thread.sleep(3000);
+		WebElement checkbox = driver.findElement(By.id("redeal-req-consent-checkmark-yes"));
+		checkbox.click();
+		Reporter.log("Agree to Terms & Policy");
+
+		Thread.sleep(3000);
+		WebElement button = driver.findElement(By.id("btn-redeal-customer-info"));
+		button.click();
+		Reporter.log("Clicked on Continue Button");
+
+		Thread.sleep(4000);
+		WebElement buttonClose = driver.findElement(By.id("redeal-send-coupon-to-yourself"));
+		buttonClose.click();
+		Reporter.log("Clicked on Close button");
+		Thread.sleep(3000);
+	}
+	
+	@Test
+	public void frinedLinkShare() throws InterruptedException {
+		Thread.sleep(2000);
+		driver.findElement(By.id("input_tag")).sendKeys("staticcode183");
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("button-instant")).click();
+
+		Thread.sleep(3000);
+		driver.findElement(By.id("redeal-minimized-button")).click();
+
+		Thread.sleep(2000);
+		WebElement frame1 = driver.findElement(By.id("redeal-modal-iframe"));
+		driver.switchTo().frame(frame1);
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("btn-redeal-customer-info")).click();
+
+		Thread.sleep(2000);
+		WebElement emailInput = driver.findElement(By.id("redeal-info-customer-email"));
+		emailInput.sendKeys("kishansinh@alvisoftware.com");
+
+		Thread.sleep(2000);
+		WebElement button = driver.findElement(By.id("btn-redeal-customer-info"));
+		button.click();
+
+		Thread.sleep(5000);
+		WebElement buttonLink = driver.findElement(By.id("redeal-lbl-shareable"));
+		buttonLink.click();
+
+		Thread.sleep(2000);
+		WebElement buttonCopyLink = driver.findElement(By.id("redeal-send-shareable-btn"));
+		buttonCopyLink.click();
+
+		Thread.sleep(6000);
+		WebElement buttonSharedLink = driver.findElement(By.id("redeal-confirm-shareable-btn"));
+		buttonSharedLink.click();
+
+		Thread.sleep(2000);
+		WebElement buttonFinish = driver.findElement(By.id("redeal-send-coupon-btn"));
+		buttonFinish.click();
+
+		Thread.sleep(2000);
+		WebElement buttonClose = driver.findElement(By.id("redeal-thanks-step-close-btn"));
+		buttonClose.click();
+
+	}
+
+	
+}
